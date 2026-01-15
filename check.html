@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style1.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="font" href="/Assets/font/goia-regular.otf">
+        <link href="https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <section>
+        <div>
+              <div class="section-label">Services</div>
+        <h1 class="section-title">Integrated services for your <br> digital journey.</h1>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+             <img src="Assets/image/overlay.png" alt="Overlay">
+              <div class="row card">
+                <div class="col">
+                     <img src="Assets/image/No (1).png" alt="Service Number">
+                </div>
+                <div class="col">
+                    <h2 class="service-title">3D PRECISION IMAGES</h2>
+                </div>
+              </div>
+           </div>
+           <div class="col">
+            <img src="Assets/image/image container.png" alt="Image Container">
+             <div class="row card">
+                <div class="col">
+                <h2 class="service-title"><span>LIFETIME IMAGES &</span> <br>ANIMATIONS</h2>
+                </div>
+                <div class="col">
+                 <img src="Assets/image/No.png" alt="Service Number">
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
+    <!---iframe-->
+    <section>
+        <div class="section-label">3D</div>
+        <h1 class="section-title">3D DIGITAL PRECISION</h1>
+        <div class="iframe-container">
+           <iframe
+                id="modelFrame"
+                title="3D Model Viewer"
+                src="iframe.html"
+                allow="autoplay; fullscreen; xr-spatial-tracking"
+                style="width:100%; height:100%; border:0;">
+            </iframe>
+       </div>
+      
+       <div class="iframe-actions">
+         <button onclick="sendConfig()">Change Color</button>
+        </div>
+    </section>
+
+    <!---footer-->
+    <!-- CONTACT SECTION -->
+
+    
+<footer class="footer-bottom">
+     <div class="grid-wrapper">
+       
+     
+    <div class="base-grid"><h1 class="yellow label">Contact Us</h1></div>
+    
+  <!-- Base Grid -->
+  <div class="base-grid">
+    <div class="inner-footer">
+        <h1 class="white-text section-title">LET'S CONNECT IN <br>PERSON — MEET US<br> OFFLINE.</h1>
+    </div>
+    <div class="contact-info">
+         <div>
+             <h6>OFFICE</h6>
+             <p>Ascendia Head Quarter<br>Northern Territory State, Canberra Island</p>
+        </div>
+
+       <div>
+        <h6>PHONE</h6>
+        <p>+61 2332 34535<br>contact@ascendia.com</p>
+       </div>
+       <div>
+        <h6>SOCIAL</h6>
+        <div class="social-links">
+           <a href="#"><i class="fab fa-facebook-f"></i></a>
+           <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        </div>
+    </div>   
+  </div>
+
+ <div class="top-grid">
+    <div>
+       <img src="Assets/image/logo.png" alt="logo">
+    </div>
+    <div>
+        <div class="menu">
+        <p>Our Approach</p>
+        <p>Services</p>
+        <p>Numbers</p>
+        <p>Why Avalon</p>
+        <p>News</p>
+        <p>Contact Us</p>       
+       </div>
+       <p>Ascendia 2024</p>
+    </div>
+    </div>
+    
+
+
+  <!-- Bottom Overlay Grid -->
+  <div class="overlay-bottom">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+</div>
+
+
+
+    </footer>
+
+
+     <script>
+    /* ---------------------------------------------------
+       Configuration
+    --------------------------------------------------- */
+
+    const PARENT_ORIGIN = window.location.origin;
+
+    /* ---------------------------------------------------
+       Message Receiver
+    --------------------------------------------------- */
+
+    function handleParentMessage(event) {
+      if (event.origin !== PARENT_ORIGIN) return;
+
+      const { type, color } = event.data || {};
+
+      if (type !== "CONFIG_UPDATE") return;
+
+      applyColor(color);
+      sendAcknowledgement(color);
+    }
+
+    /* ---------------------------------------------------
+       Business Logic
+    --------------------------------------------------- */
+
+    function applyColor(color) {
+      document.body.style.backgroundColor = color;
+    }
+
+    /* ---------------------------------------------------
+       Message Sender
+    --------------------------------------------------- */
+
+    function sendAcknowledgement(color) {
+      const response = {
+        status: "received",
+        appliedColor: color
+      };
+
+      window.parent.postMessage(response, PARENT_ORIGIN);
+      console.log("[Iframe] Sent:", response);
+    }
+
+    /* ---------------------------------------------------
+       Event Binding
+    --------------------------------------------------- */
+
+    window.addEventListener("message", handleParentMessage);
+  </script>
+
+        <script src="srcpit.js" async defer></script>
+    </body>
+</html>

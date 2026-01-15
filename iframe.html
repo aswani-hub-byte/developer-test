@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Iframe Page</title>
+         <link href="https://fonts.googleapis.com/css2?family=Smooch+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+         <link rel="stylesheet" href="style1.css"> 
+</head>
+<body>
+  <div>
+    <h1 class="model-title">3D MODEL</h1>
+  </div>
+  
+  <script>
+    /* ---------------------------------------------------
+       Configuration
+    --------------------------------------------------- */
+
+    const PARENT_ORIGIN = window.location.origin;
+
+    /* ---------------------------------------------------
+       Message Receiver
+    --------------------------------------------------- */
+
+    function handleParentMessage(event) {
+      if (event.origin !== PARENT_ORIGIN) return;
+
+      const { type, color } = event.data || {};
+
+      if (type !== "CONFIG_UPDATE") return;
+
+      applyColor(color);
+      sendAcknowledgement(color);
+    }
+
+    /* ---------------------------------------------------
+       Business Logic
+    --------------------------------------------------- */
+
+    function applyColor(color) {
+      document.body.style.backgroundColor = color;
+    }
+
+    /* ---------------------------------------------------
+       Message Sender
+    --------------------------------------------------- */
+
+    function sendAcknowledgement(color) {
+      const response = {
+        status: "received",
+        appliedColor: color
+      };
+
+      window.parent.postMessage(response, PARENT_ORIGIN);
+      console.log("[Iframe] Sent:", response);
+    }
+
+    /* ---------------------------------------------------
+       Event Binding
+    --------------------------------------------------- */
+
+    window.addEventListener("message", handleParentMessage);
+  </script>
+</body>
+</html>
